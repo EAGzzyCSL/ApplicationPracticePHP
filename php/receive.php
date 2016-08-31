@@ -7,8 +7,8 @@ require "connectSql.php";
 $PostType = $_GET['PostType'];
 
 switch ($PostType) {
-    case "test":
-        require "test.php";
+    case "Course":
+        require "Course.php";
         break;
 }
 
