@@ -111,7 +111,6 @@
                         $accessKey = $config['accessKey'];
                         $secretKey = $config['secretKey'];
                         $auth = new Auth($accessKey, $secretKey);
-                        $test = 'hello world';
                         $policy = array(
                           'returnUrl' => $config['returnUrl'],
                           'returnBody' => '{"key": $(key), "hash":$(etag),"canteen_name":$(x:canteen_name),"canteen_address":$(x:canteen_address)}',
