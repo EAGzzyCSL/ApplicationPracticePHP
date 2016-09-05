@@ -31,6 +31,15 @@ switch ($PostType) {
     case "login_1":
         require "login_1.php";
         break;
+    case "check_token":
+        require "check_token.php";
+        break;
+    case "admin_login":
+        require "admin_login.php";
+        break;
+    case "Get_school":
+        require "Get_school.php";
+        break;
 }
 
 mysqli_close($conn);
