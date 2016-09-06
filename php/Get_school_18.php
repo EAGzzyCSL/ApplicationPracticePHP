@@ -12,8 +12,12 @@ if (!(mysqli_num_rows($result))){
     echo newjson(12,"不包括该学校",$array);
 }else {
     $i=0;
-    while($row = mysqli_fetch_array($result))
-        $array[$i++]['school']=$row['name'];
+    while($row = mysqli_fetch_array($result)){
+        $array[$i]['ID']=$row['ID'];
+        $array[$i]['name']=$row['name'];
+        $i++;
+    }
+        $array[$i]['name']=$row['name'];
     echo newjson(13,"包含该学校",$array);
 }
 ?>
