@@ -8,8 +8,8 @@
 //mysqli_query($conn,"set names utf8");
 header("Content-type: text/html;charset=utf-8;");
 $array=null;
-$name=$_GET['name'];
-$password=$_GET['password'];
+$name=$_POST['name'];
+$password=$_POST['password'];
 //$sql="UPDATE Course SET C_Time='$c',C_Student='$b' WHERE C_ID='$cha'";
 $result = mysqli_query($conn,"SELECT * FROM user WHERE name='$name'");
 if(!(mysqli_num_rows($result))){

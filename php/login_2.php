@@ -7,8 +7,8 @@
  */
 header("Content-type: text/html;charset=utf-8;");
 $array=null;
-$name=$_GET['name'];
-$password=$_GET['password'];
+$name=$_POST['name'];
+$password=$_POST['password'];
 $result = mysqli_query($conn,"SELECT * FROM user WHERE name='$name' AND password='$password'");
 if(!(mysqli_num_rows($result))){
     echo newjson(4,"账号或密码错误",$array);
