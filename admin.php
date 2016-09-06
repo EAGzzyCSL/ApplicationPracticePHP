@@ -1,3 +1,9 @@
+<?php 
+session_start();
+if ($_SESSION['currentUser'] != '') {
+    header('location:manager.php');
+}
+ ?>
 <!DOCTYPE html>
 <html>
 
@@ -39,11 +45,16 @@
             <div class="form-group">
                 <!-- php帐号密码匹配判断与错误信息输出 -->
                 <?php
-                  error_reporting(7);
+                  require 'php/_db_con.php';
                   if (isset($_POST['username']) && isset($_POST['md5password'])) {
                       $username = $_POST['username'];
                       $password = $_POST['md5password'];
-                      if ($username == 'root') {
+                      $stmt = $db_con->prepare('SELECT * FROM `admin` WHERE `name`=? AND `password`=?');
+                      $stmt->bind_param('ss', $username, $password);
+                      $stmt->execute();
+                      if ($stmt->fetch()) {
+                          session_start();
+                          $_SESSION['currentUser'] = $username;
                           header('Location:manager.php');
                       } else {
                           echo '<p class="text-danger text-center">用户名或密码错误</p>';
@@ -57,7 +68,7 @@
         var form_login = document.getElementById("form_login");
         form_login.onsubmit = function() {
             if (form_login.password.value != '') {
-                form_login.mdh1_title5password.value = md5(form_login.md5password.value);
+                form_login.md5password.value = md5(form_login.password.value);
                 from_login.password.value = "";
             }
         };
