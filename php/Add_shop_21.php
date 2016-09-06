@@ -14,7 +14,7 @@ $school_ID=$_POST['school_ID'];
 $rate=$_POST['rate'];
 $sql = "INSERT INTO shop (name,address,image,school_ID,rate) VALUES ('$name','$address','$image','$school_ID','$rate')";
 if (mysqli_query($conn,$sql)) {
-    echo "添加餐馆成功";
+    echo newjson(40,"添加餐馆成功",$array);
 } else {
     echo newjson(24,"添加餐馆失败",$array);
 }
