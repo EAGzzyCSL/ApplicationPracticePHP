@@ -1,3 +1,9 @@
+<?php 
+session_start();
+if ($_SESSION['currentUser'] == '') {
+    header('location:admin.php');
+}
+ ?>
 <!DOCTYPE html>
 <html>
 
@@ -60,34 +66,74 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">校园美食评后台管理系统</a>
             </div>
-            <form class="navbar-form navbar-right" action="" method="post">
+            <form class="navbar-form navbar-right" action="php/logOut.php" method="post">
                 <!--  表单发送注销请求-->
                 <input id="button_logout" type="submit" class="btn btn-primary" value="注销" />
             </form>
         </div>
     </nav>
+    
     <!-- 列表部分 -->
     <div classs="container">
         <div class="col-lg-offset-2 col-lg-2">
             <button id="button_add" class="btn btn-primary" data-toggle="modal" data-target="#modal_add">添加</button>
         </div>
         <div id="div_list" class="col-lg-10 col-lg-offset-2">
+          <?php 
+          require 'php/_db_con.php';
+          $stmt = $db_con->prepare(
+          'SELECT * FROM `shop`');
+          $stmt->execute();
+          $stmt_result = $stmt->get_result();
+          while ($one = $stmt_result->fetch_assoc()) {
+              ?>
             <div class="div_one">
                 <div class="div_info">
-                    <h2 class="h2_title">三食堂</h2>
-                    <span class="span_address">教工食堂旁边</span>
+                    <h2 class="h2_title">
+                    <?php echo $one['name'];
+              ?>
+                    </h2>
+                    <span class="span_address">
+                      <?php echo $one['address'];
+              ?>
+                    </span>
+                    <span class="span_school">
+                      <?php 
+                      $stmt_getSchoolName = $db_con->prepare(
+                      'SELECT * FROM `school` WHERE `ID`=?');
+              $stmt_getSchoolName->bind_param('i', $one['school_ID']);
+              $stmt_getSchoolName->execute();
+              $stmt_getSchoolName_result = $stmt_getSchoolName->get_result();
+              if ($schoolName = $stmt_getSchoolName_result->fetch_assoc()) {
+                  echo $schoolName['name'];
+              }
+              $stmt_getSchoolName->close();
+              ?>
+                    </span>
                 </div>
                 <div class="div_imgs">
-                    <img class="img_pic" src="test.png" />
+                    <img class="img_pic" src="
+                    <?php
+                      echo $one['image'];
+              ?>
+                    " />
                 </div>
                 <div class="div_opt">
                     <button type="button" class="btn btn-primary">编辑</button>
-                    <form class="form_delete">
-                        <input type="hidden" value="the data id" />
+                    <form class="form_delete" action="php/deleteShop.php" method="post">
+                        <input name="id" type="hidden" value="
+                        <?php
+                          echo $one['ID'];
+              ?>
+                        " />
                         <input type="submit" value="删除" class="btn btn-danger" />
                     </form>
                 </div>
             </div>
+            <?php 
+          }
+            $stmt->close();
+             ?>
         </div>
     </div>
     <!-- modal -->
@@ -113,7 +159,7 @@
                         $auth = new Auth($accessKey, $secretKey);
                         $policy = array(
                           'returnUrl' => $config['returnUrl'],
-                          'returnBody' => '{"key": $(key), "hash":$(etag),"canteen_name":$(x:canteen_name),"canteen_address":$(x:canteen_address)}',
+                          'returnBody' => '{"key": $(key), "hash":$(etag),"canteen_name":$(x:canteen_name),"canteen_address":$(x:canteen_address),"canteen_school":$(x:canteen_school)}',
                         );
                         $upToken = $auth->uploadToken($bucket, null, 3600, $policy);
                         echo '<input name="token" type="hidden" value="'.$upToken.'">';
@@ -124,6 +170,21 @@
                         <div class="form-group">
                             <input class="form-control" required="required" name="x:canteen_address" placeholder="食堂地址" />
                         </div>
+                        <div class="form-group"> 
+                          <label for="name">选择学校</label> 
+                          
+                          <select id="select_school" name="x:canteen_school" class="form-control"> 
+                            <?php 
+                            $stmt = $db_con->prepare('SELECT * FROM `school`');
+                            $stmt->execute();
+                            $stmt_result = $stmt->get_result();
+                            while ($one = $stmt_result->fetch_assoc()) {
+                                echo '<option value="'.$one[ID].'">'.$one['name'].'</option>';
+                            }
+                            $stmt->close();
+                             ?>
+                          </select> 
+                        </div> 
                         <div class="form-group">
                             <label for="input_img">选择食堂照片</label>
                             <input id="input_img" class="filestyle" name="file" required="required" accept="image/png,image/jpeg" type="file" />
