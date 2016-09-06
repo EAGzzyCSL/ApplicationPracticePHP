@@ -20,7 +20,7 @@ if(!(mysqli_num_rows($result))){
     $sql = "INSERT INTO comment (user_ID, goods_ID, content,rate,time) VALUES ('$user_ID','$goods_ID','$content','$rate','$date')";
     $new=mysqli_query($conn,$sql);
     if($new) echo newjson(24,"添加评论成功",$array);
-    else echo newjson(23,"添加评论失败");
+    else echo newjson(23,"添加评论失败",$array);
 }
 
 ?>
