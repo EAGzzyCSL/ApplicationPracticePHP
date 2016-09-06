@@ -7,9 +7,8 @@
  */
 header("Content-type: text/html;charset=utf-8;");
 $array=null;
-$ID=$_GET['ID'];
-$name=$_GET['name'];
-$sql = "INSERT INTO tag (ID, name) VALUES ('$ID','$name')";
+$name=$_POST['name'];
+$sql = "INSERT INTO tag (name) VALUES ('$name')";
 if (mysqli_query($conn,$sql)) {
     echo "新标签添加成功";
 } else {
