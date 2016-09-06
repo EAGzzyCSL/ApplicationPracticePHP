@@ -41,33 +41,25 @@ function JSON($array) {
 
 function newjson($code, $msg, $array)
 {
-    $new['code']=$code;
-    $new['msg']=$msg;
+//    $new['code']=$code;
+//    $new['msg']=$msg;
    // echo "测试".$msg."MM";
     //echo JSON("地方:地方");
-    if($array==null){}
+    if($array==null){
+        $newq ='{"code":"'.$code.'","msg":"'.$msg.'"}';
+        return $newq;
+    }
     else {
-
-        $new['data']=JSON($array);
+        $newq ='{"code":"'.$code.'","msg":"'.$msg.'","data":'.Json($array).'}';
+        return $newq;
     }
 
-    return JSON($new);
-}
-
-function njson($code, $msg)
-{
-    $new['code']=$code;
-    $new['msg']=$msg;
-    echo "测试".$msg."MM";
-    return JSON($new);
 }
 
 function create_unique() {
     $data = $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']
         .time() . rand();
     return sha1($data);
-//return md5(time().$data);
-//return $data;
 }
 ?>
 
