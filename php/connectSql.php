@@ -16,17 +16,17 @@
 ?>
 
 <?php
-header("Content-type: text/html;charset=utf-8;");
+header("Content-type: text/html;charset=utf8;");
 $servername = "localhost";
-$username = "luongyin";
+$username = "school";
 $password = "123456";
 
 // 创建连接
-$conn = mysqli_connect($servername, $username, $password,'cnsrdb');
+$conn = mysqli_connect($servername, $username, $password,'schoolfood');
+mysqli_query($conn,"set names utf8");
 
 // 检测连接
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
-echo "连接成功";
 ?>

@@ -1,14 +1,6 @@
 <?php
+header("Content-type: text/html;charset=utf-8;");
 
-/**************************************************************
- *
- *    使用特定function对数组中所有元素做处理
- * @param    string &$array 要处理的字符串
- * @param    string $function 要执行的函数
- * @return boolean    $apply_to_keys_also        是否也应用到key上
- * @access public
- *
- *************************************************************/
 function arrayRecursive(&$array, $function, $apply_to_keys_also = false)
 {
     static $recursive_counter = 0;
@@ -35,15 +27,48 @@ function arrayRecursive(&$array, $function, $apply_to_keys_also = false)
 
 /**************************************************************
  *
- *    将数组转换为JSON字符串（兼容中文）
- * @param    array $array 要转换的数组
- * @return string        转换得到的json字符串
- * @access public
+ *	将数组转换为JSON字符串（兼容中文）
+ *	@param	array	$array		要转换的数组
+ *	@return string		转换得到的json字符串
+ *	@access public
  *
  *************************************************************/
-function JSON($array)
-{
+function JSON($array) {
     arrayRecursive($array, 'urlencode', true);
     $json = json_encode($array);
     return urldecode($json);
 }
+
+function newjson($code, $msg, $array)
+{
+    $new['code']=$code;
+    $new['msg']=$msg;
+   // echo "测试".$msg."MM";
+    //echo JSON("地方:地方");
+    if($array==null){}
+    else {
+
+        $new['data']=JSON($array);
+    }
+
+    return JSON($new);
+}
+
+function njson($code, $msg)
+{
+    $new['code']=$code;
+    $new['msg']=$msg;
+    echo "测试".$msg."MM";
+    return JSON($new);
+}
+
+function create_unique() {
+    $data = $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']
+        .time() . rand();
+    return sha1($data);
+//return md5(time().$data);
+//return $data;
+}
+?>
+
+
