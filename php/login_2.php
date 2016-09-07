@@ -24,7 +24,6 @@ if(!(mysqli_num_rows($result))){
     if (mysqli_query($conn,$sql)) {
         $array['ID']=$row['ID'];
         $array['name']=$row['name'];
-        $array['password']=$row['password'];
         $array['token']=$number;
         echo newjson(1,"登录成功",$array);//"新记录插入成功";
     } else {

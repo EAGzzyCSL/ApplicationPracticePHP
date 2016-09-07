@@ -43,8 +43,8 @@ switch ($PostType) {
     case "Get_collection":
         require "Get_collection_12.php";
         break;
-    case "collection":
-        require "collection_13.php";
+    case "add_collection":
+        require "add_collection_13.php";
         break;
     case "Judge_collection":
         require "Judge_collection_14.php";
@@ -55,14 +55,14 @@ switch ($PostType) {
     case "Add_friends":
         require "Add_friends_16.php";
         break;
-    case "Get_userinfo":
-        require "Get_userinfo_17.php";
+    case "Get_userinfor":
+        require "Get_userinfor_17.php";
         break;
     case "Get_school":
         require "Get_school_18.php";
         break;
-    case "Update_userinfo":
-        require "Update_userinfo_19.php";
+    case "Update_userinfor":
+        require "Update_userinfor_19.php";
         break;
     case "Admin_login":
         require "Admin_login_20.php";
@@ -78,6 +78,12 @@ switch ($PostType) {
         break;
     case "Goods_search":
         require "Goods_search_24.php";
+        break;
+    case "delete_collection":
+        require "delete_collection_25.php";
+        break;
+    case "logout":
+        require "logout_26.php";
         break;
 }
 mysqli_close($conn);

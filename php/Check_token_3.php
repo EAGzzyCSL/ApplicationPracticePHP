@@ -13,6 +13,11 @@ $result = mysqli_query($conn,"SELECT * FROM token WHERE token='$token' AND user_
 if(!(mysqli_num_rows($result))){
     echo newjson(4,"token不存在",$array);
 }else{
+    $result = mysqli_query($conn,"SELECT * FROM user WHERE ID='$user_ID'");
+    $row = mysqli_fetch_array($result);
+    $array['ID']=$row['ID'];
+    $array['name']=$row['name'];
+    $array['token']=$token;
     echo newjson(5,"token存在",$array);
 }
 ?>
