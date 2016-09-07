@@ -82,6 +82,9 @@ switch ($PostType) {
     case "delete_collection":
         require "delete_collection_25.php";
         break;
+    case "logout":
+        require "logout_26.php";
+        break;
 }
 mysqli_close($conn);
 ?>
