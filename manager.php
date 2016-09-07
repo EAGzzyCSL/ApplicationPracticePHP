@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if ($_SESSION['currentUser'] == '') {
+if (isset($_SESSION['currentUser']) == false || $_SESSION['currentUser'] == '') {
     header('location:admin.php');
 }
  ?>
@@ -21,6 +21,7 @@ if ($_SESSION['currentUser'] == '') {
             margin: 1em 0;
             padding: 1em;
             display: flex;
+            height: 20em;
         }
 
         .div_one:nth-child(odd) {
@@ -32,6 +33,7 @@ if ($_SESSION['currentUser'] == '') {
         .div_info {
             display: inline-block;
             vertical-align: top;
+            flex: 0 0 20em;
         }
 
         .div_imgs {
@@ -39,9 +41,9 @@ if ($_SESSION['currentUser'] == '') {
         }
 
         .img_pic {
-            height: 9em;
-            width: 16em;
+            
             margin: 0 1em;
+            height: 100%;
         }
 
         .div_opt {
@@ -50,6 +52,9 @@ if ($_SESSION['currentUser'] == '') {
 
         .form_delete {
             display: inline;
+        }
+        #div_container{
+          margin-top: 5em;
         }
         /*模态框*/
 
@@ -61,7 +66,7 @@ if ($_SESSION['currentUser'] == '') {
 </head>
 
 <body>
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">校园美食评后台管理系统</a>
@@ -74,11 +79,11 @@ if ($_SESSION['currentUser'] == '') {
     </nav>
     
     <!-- 列表部分 -->
-    <div classs="container">
-        <div class="col-lg-offset-2 col-lg-2">
+    <div id="div_container" classs="container">
+        <div class="col-lg-offset-3 col-lg-2">
             <button id="button_add" class="btn btn-primary" data-toggle="modal" data-target="#modal_add">添加</button>
         </div>
-        <div id="div_list" class="col-lg-10 col-lg-offset-2">
+        <div id="div_list" class="col-lg-6 col-lg-offset-3">
           <?php 
           require 'php/_db_con.php';
           $stmt = $db_con->prepare(
@@ -90,14 +95,14 @@ if ($_SESSION['currentUser'] == '') {
             <div class="div_one">
                 <div class="div_info">
                     <h2 class="h2_title">
-                    <?php echo $one['name'];
+                      <?php echo $one['name'];
               ?>
                     </h2>
-                    <span class="span_address">
+                    <h4 class="span_address">地址：
                       <?php echo $one['address'];
               ?>
-                    </span>
-                    <span class="span_school">
+            </h4>
+                    <h4 class="span_school">学校：
                       <?php 
                       $stmt_getSchoolName = $db_con->prepare(
                       'SELECT * FROM `school` WHERE `ID`=?');
@@ -109,7 +114,7 @@ if ($_SESSION['currentUser'] == '') {
               }
               $stmt_getSchoolName->close();
               ?>
-                    </span>
+            </h4>
                 </div>
                 <div class="div_imgs">
                     <img class="img_pic" src="

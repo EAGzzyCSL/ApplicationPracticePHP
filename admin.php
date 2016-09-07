@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if ($_SESSION['currentUser'] != '') {
+if (isset($_SESSION['currentUser']) && $_SESSION['currentUser'] != '') {
     header('location:manager.php');
 }
  ?>
