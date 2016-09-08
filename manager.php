@@ -81,7 +81,8 @@ if (isset($_SESSION['currentUser']) == false || $_SESSION['currentUser'] == '') 
     <!-- 列表部分 -->
     <div id="div_container" classs="container">
         <div class="col-lg-offset-3 col-lg-2">
-            <button id="button_add" class="btn btn-primary" data-toggle="modal" data-target="#modal_add">添加</button>
+            <button  class="btn btn-primary" data-toggle="modal" data-target="#modal_add_canteen">添加餐厅</button>
+            <button  class="btn btn-primary" data-toggle="modal" data-target="#modal_add_school">添加学校</button>
         </div>
         <div id="div_list" class="col-lg-6 col-lg-offset-3">
           <?php 
@@ -142,7 +143,7 @@ if (isset($_SESSION['currentUser']) == false || $_SESSION['currentUser'] == '') 
         </div>
     </div>
     <!-- modal -->
-    <div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal_add_canteen" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -203,6 +204,40 @@ if (isset($_SESSION['currentUser']) == false || $_SESSION['currentUser'] == '') 
                 </div>
             </div>
         </div>
+      </div>
+      <!--添加学校的-->
+      <div class="modal fade" id="modal_add_school" tabindex="-1" role="dialog" aria-hidden="true"> 
+        <div class="modal-dialog"> 
+          <div class="modal-content"> 
+            <div class="modal-header"> 
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
+              <h4 class="modal-title" id="myModalLabel">添加学校</h4> 
+          </div> 
+          <div class="modal-body">
+            <form role="form" id="form_add_school" method="post" action="php/addSchool.php" enctype="multipart/form-data">
+              <div class="form-group">
+                  <input placeholder="输入学校名称" class="form-control" name="schoolName" required="required" list="schoolList"/>
+                  <datalist id="schoolList">
+                    <?php 
+                    $stmt = $db_con->prepare('SELECT * FROM `school`');
+                    $stmt->execute();
+                    $stmt_result = $stmt->get_result();
+                    while ($one = $stmt_result->fetch_assoc()) {
+                        echo '<option value="'.$one['name'].'" />';
+                    }
+                    $stmt->close();
+                     ?>
+                  </datalist>
+              </div>
+            </form>
+          </div> 
+          <div class="modal-footer"> 
+              <button type="button" class="btn btn-default" data-dismiss="modal">取消</button> 
+              <input type="submit" form="form_add_school" class="btn btn-primary" value="保存"/>
+          </div> 
+        </div>
+      </div>
+    </div>
         <script type="text/javascript">
             var button_add = document.getElementById("button_add");
             var img_preview = document.getElementById("img_preview");

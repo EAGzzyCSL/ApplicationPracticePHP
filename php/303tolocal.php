@@ -9,7 +9,7 @@ if (isset($_GET['upload_ret'])) {
     $json = json_decode($base64);
     // echo var_dump($json);
     require '_db_con.php';
-    $stmt = $db_con->prepare('INSERT INTO `shop`(`name`, `address`, `image`, `school_ID`,`rate`) VALUES (?,?,?,?,0)');
+    $stmt = $db_con->prepare('INSERT INTO `shop`(`name`, `address`, `image`, `school_ID`) VALUES (?,?,?,?)');
     $stmt->bind_param('sssi', $json->canteen_name, $json->canteen_address, $imgUrl, $json->canteen_school);
     $imgUrl = $config['bucket_host'].$json->key;
     $stmt->execute();
