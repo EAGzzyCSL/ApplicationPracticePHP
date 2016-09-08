@@ -17,7 +17,6 @@ if (!(mysqli_num_rows($result))){
         $array[$i]['name']=$row['name'];
         $i++;
     }
-        $array[$i]['name']=$row['name'];
     echo newjson(13,"包含该学校",$array);
 }
 ?>

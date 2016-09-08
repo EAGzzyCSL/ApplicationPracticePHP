@@ -16,12 +16,15 @@ if(!(mysqli_num_rows($result))){
     while ($row = mysqli_fetch_array($result)) {
         $array[$i]['ID'] = $row['ID'];
         $array[$i]['user_ID'] = $row['user_ID'];
+        $result1 = mysqli_query($conn,"SELECT * FROM user WHERE  ID=".$row['user_ID']);
+        $row1 = mysqli_fetch_array($result1);
+        $array[$i]['name']=$row1['name'];
         $array[$i]['goods_ID'] = $row['goods_ID'];
         $array[$i]['content'] = $row['content'];
         $array[$i]['rate'] = $row['rate'];
         $array[$i]['time'] = $row['time'];
         $i++;
-        echo newjson(15,"查询成功",$array);
     }
+    echo newjson(15,"查询成功",$array);
 }
     ?>
