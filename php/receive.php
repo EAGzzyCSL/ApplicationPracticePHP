@@ -85,6 +85,10 @@ switch ($PostType) {
     case "logout":
         require "logout_26.php";
         break;
+    case "Get_allcomment":
+        require "Get_allcomment_27.php";
+        break;
+
 }
 mysqli_close($conn);
 ?>
