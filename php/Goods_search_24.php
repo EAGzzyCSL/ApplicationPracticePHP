@@ -7,6 +7,7 @@
  */
 header("Content-type: text/html;charset=utf-8;");
 $array=null;
+$sql=null;
 $keyword=$_POST['keyword'];
 if (isset($_POST['user_ID'])){
     $user_ID=$_POST['user_ID'];
@@ -17,7 +18,70 @@ if (isset($_POST['user_ID'])){
     $new=mysqli_query($conn,$sql);
 }
 
-$result = mysqli_query($conn,"SELECT * FROM goods WHERE  name LIKE '%$keyword%'");
+$order=$_POST['order'];
+switch ($order){
+    case "0":
+        if(isset($_POST['school_ID'])){
+            if(isset($_POST['shop_ID'])){
+                $shop_ID=$_POST['shop_ID'];
+                $sql="SELECT * FROM goods WHERE  name LIKE '%$keyword%' AND shop_ID='$shop_ID' ORDER BY rate DESC";
+            }else{
+                $school_ID=$_POST['school_ID'];
+                $sql="SELECT * FROM goods WHERE  name LIKE '%$keyword%' AND school_ID='$school_ID' ORDER BY rate DESC";
+                break;
+            }
+        }else{
+            $sql="SELECT * FROM goods WHERE  name LIKE '%$keyword%' ORDER BY rate DESC";
+            break;
+        }
+    case "1":
+        if(isset($_POST['school_ID'])){
+            if(isset($_POST['shop_ID'])){
+                $shop_ID=$_POST['shop_ID'];
+                $sql="SELECT * FROM goods WHERE  name LIKE '%$keyword%' AND shop_ID='$shop_ID' ORDER BY rate ASC";
+                break;
+            }else{
+                $school_ID=$_POST['school_ID'];
+                $sql="SELECT * FROM goods WHERE  name LIKE '%$keyword%' AND school_ID='$school_ID' ORDER BY rate ASC";
+                break;
+            }
+        }else{
+            $sql="SELECT * FROM goods WHERE  name LIKE '%$keyword%' ORDER BY rate ASC";
+            break;
+        }
+    case "2":
+        if(isset($_POST['school_ID'])){
+            if(isset($_POST['shop_ID'])){
+                $shop_ID=$_POST['shop_ID'];
+                $sql="SELECT * FROM goods WHERE  name LIKE '%$keyword%' AND shop_ID='$shop_ID' ORDER BY price ASC";
+                break;
+            }else{
+                $school_ID=$_POST['school_ID'];
+                $sql="SELECT * FROM goods WHERE  name LIKE '%$keyword%' AND school_ID='$school_ID' ORDER BY price ASC";
+                break;
+            }
+        }else{
+            $sql="SELECT * FROM goods WHERE  name LIKE '%$keyword%' ORDER BY price ASC";
+            break;
+        }
+    case "3":
+        if(isset($_POST['school_ID'])){
+            if(isset($_POST['shop_ID'])){
+                $shop_ID=$_POST['shop_ID'];
+                $sql="SELECT * FROM goods WHERE  name LIKE '%$keyword%' AND shop_ID='$shop_ID' ORDER BY price DESC";
+                break;
+            }else{
+                $school_ID=$_POST['school_ID'];
+                $sql="SELECT * FROM goods WHERE  name LIKE '%$keyword%' AND school_ID='$school_ID' ORDER BY price DESC";
+                break;
+            }
+        }else{
+            $sql="SELECT * FROM goods WHERE  name LIKE '%$keyword%' ORDER BY price DESC";
+            break;
+        }
+}
+
+$result = mysqli_query($conn,$sql);
 if(!(mysqli_num_rows($result))){
     echo newjson(10,"没有有关的数据",$array);
 }else {

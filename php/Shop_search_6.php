@@ -17,7 +17,24 @@ if (isset($_POST['user_ID'])){
     $new=mysqli_query($conn,$sql);
 }
 
-$result = mysqli_query($conn,"SELECT * FROM shop WHERE  name LIKE '%$keyword%'");
+$order=$_POST['order'];
+if($order==0){
+    if(isset($_POST['school_ID'])){
+        $school_ID=$_POST['school_ID'];
+        $sql="SELECT * FROM shop WHERE  name LIKE '%$keyword%' AND school_ID='$school_ID' ORDER BY rate DESC";
+    }else{
+        $sql="SELECT * FROM shop WHERE  name LIKE '%$keyword%' ORDER BY rate DESC";
+    }
+}else if ($order==1){
+    if(isset($_POST['school_ID'])){
+        $school_ID=$_POST['school_ID'];
+        $sql="SELECT * FROM shop WHERE  name LIKE '%$keyword%' AND school_ID='$school_ID' ORDER BY rate ASC";
+    }else{
+        $sql="SELECT * FROM shop WHERE  name LIKE '%$keyword%' ORDER BY rate ASC";
+    }
+}
+
+$result = mysqli_query($conn,$sql);
 if(!(mysqli_num_rows($result))){
     echo newjson(10,"没有有关的数据",$array);
 }else {
