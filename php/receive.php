@@ -85,6 +85,9 @@ switch ($PostType) {
     case "logout":
         require "logout_26.php";
         break;
+    case "get_qiniu_token":
+        require "getToken.php";
+        break;
 }
 mysqli_close($conn);
 ?>
