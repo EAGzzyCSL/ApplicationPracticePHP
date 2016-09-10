@@ -62,5 +62,3 @@ function create_unique() {
     return sha1($data);
 }
 ?>
-
-

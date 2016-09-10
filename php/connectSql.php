@@ -14,7 +14,6 @@
 //    die("数据库连接出错");
 //}
 ?>
-
 <?php
 header("Content-type: text/html;charset=utf8;");
 $servername = "localhost";
