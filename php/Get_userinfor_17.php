@@ -14,16 +14,14 @@ if(!(mysqli_num_rows($result))){
     echo newjson(18,"token操作错误，拒绝服务",$array);
 }else {
     $result1 = mysqli_query($conn, "SELECT * FROM user_infor WHERE ID='$user_ID'");
-    $i = 0;
     while ($row = mysqli_fetch_array($result1)) {
-        $array[$i]['ID'] = $row['ID'];
-        $array[$i]['name'] = $row['name'];
-        $array[$i]['sex'] = $row['sex'];
-        $array[$i]['native'] = $row['native'];
-        $array[$i]['tel'] = $row['tel'];
-        $array[$i]['email'] = $row['email'];
-        $array[$i]['birth'] = $row['birth'];
-        $i++;
+        $array['ID'] = $row['ID'];
+        $array['name'] = $row['name'];
+        $array['sex'] = $row['sex'];
+        $array['dormitory'] = $row['native'];
+        $array['tel'] = $row['tel'];
+        $array['email'] = $row['email'];
+        $array['birth'] = $row['birth'];
     }
     echo newjson(28, "获取用户详情成功", $array);
 }
