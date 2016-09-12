@@ -20,9 +20,11 @@ if (!(mysqli_num_rows($result))) {
     $sql = "INSERT INTO comment (user_ID, goods_ID, content,rate,time) VALUES ('$user_ID','$goods_ID','$content','$rate','$date')";
     $new = mysqli_query($conn, $sql);
     $comment_id = $conn->insert_id;
-    $imageArray = explode(', ', substr($images, 1, -1));
-    foreach ($imageArray as $one_image) {
-        mysqli_query($conn, "INSERT INTO `comment_image`( `comment_ID`, `url`) VALUES ('$comment_id','$one_image')");
+    $imageArray = explode(',', $images);
+    if ($images != '') {
+        foreach ($imageArray as $one_image) {
+            mysqli_query($conn, "INSERT INTO `comment_image`( `comment_ID`, `url`) VALUES ('$comment_id','$one_image')");
+        }
     }
     if ($new) {
         echo newjson(24, '添加评论成功', $array);

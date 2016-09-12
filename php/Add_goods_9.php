@@ -20,9 +20,11 @@ if (!(mysqli_num_rows($result))) {
     $sql = "INSERT INTO goods (name, price, shop_ID,school_ID) VALUES ('$name','$price','$shop_ID','$school_ID')";
     $new = mysqli_query($conn, $sql);
     $goods_id = $conn->insert_id;
-    $imageArray = explode(', ', substr($images, 1, -1));
-    foreach ($imageArray as $one_image) {
-        mysqli_query($conn, "INSERT INTO `goods_image`(`goods_ID`, `url`) VALUES ('$goods_id','$one_image')");
+    if ($images != '') {
+        $imageArray = explode(',', $images);
+        foreach ($imageArray as $one_image) {
+            mysqli_query($conn, "INSERT INTO `goods_image`(`goods_ID`, `url`) VALUES ('$goods_id','$one_image')");
+        }
     }
     echo newjson(19, '操作成功', $array);
 }
