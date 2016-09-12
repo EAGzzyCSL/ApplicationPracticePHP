@@ -17,6 +17,14 @@ if (!(mysqli_num_rows($result))) {
     $i = 0;
     while ($row = mysqli_fetch_array($result1)) {
         $array[$i]['content'] = $row['content'];
+        $array[$i]['rate'] = $row['rate'];
+        $comment_ID = $row['ID'];
+        $result_image = mysqli_query($conn, "SELECT `url` FROM `comment_image` WHERE `comment_ID`=$comment_ID");
+        $url_array = array();
+        while ($row_image = mysqli_fetch_array($result_image)) {
+            array_push($url_array, $row_image['url']);
+        }
+        $array[$i]['images'] = $url_array;
         ++$i;
     }
     echo newjson(40, '获取用户所有评论成功', $array);

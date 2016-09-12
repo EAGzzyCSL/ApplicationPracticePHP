@@ -20,6 +20,13 @@ if(!(mysqli_num_rows($result))){
             $array[$i]['shop_ID'] = $row['shop_ID'];
             $array[$i]['school_ID'] = $row['school_ID'];
             $array[$i]['rate'] = $row['rate'];
+            $goods_ID = $row['ID'];
+            $result_image = mysqli_query($conn, "SELECT `url` FROM `goods_image` WHERE `goods_ID`=$goods_ID");
+            $url_array = array();
+            while ($row_image = mysqli_fetch_array($result_image)) {
+                array_push($url_array, $row_image['url']);
+            }
+            $array[$i]['images'] = $url_array;
             $i++;
         }
         echo newjson(17, "获取收藏成功", $array);
