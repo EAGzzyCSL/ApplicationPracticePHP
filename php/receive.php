@@ -91,6 +91,9 @@ switch ($PostType) {
     case "get_qiniu_token":
         require "getToken.php";
         break;
+    case "delete_praise":
+        require "delete_praise_28.php";
+        break;
 }
 mysqli_close($conn);
 ?>
