@@ -16,6 +16,13 @@ if(!(mysqli_num_rows($result))){
     $sql = "INSERT INTO user (name, password) VALUES ('$name','$password')";
     if (mysqli_query($conn,$sql)) {
         echo newjson(1,"注册成功",$array);//"新记录插入成功";
+        //可用触发器替换
+        $result = mysqli_query($conn,"SELECT ID FROM user WHERE name='$name'");
+        $row = mysqli_fetch_array($result);
+        $ID = $row['ID'];
+        $sql = "INSERT INTO user_infor (ID, name) VALUES ('$ID','$name')";
+        $result = mysqli_query($conn,$sql);
+
     } else {
         echo newjson(2,"插入数据失败,注册失败",$array);
     }

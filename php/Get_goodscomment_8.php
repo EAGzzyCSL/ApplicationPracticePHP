@@ -20,7 +20,7 @@ if(isset($_POST['user_ID'])){
 $result = mysqli_query($conn, "SELECT comment.*,user_infor.name,user_infor.avatar
 FROM comment,user_infor WHERE comment.goods_ID='$goods_ID' AND comment.user_ID=user_infor.ID ORDER BY comment.like_num DESC");
 if (!(mysqli_num_rows($result))) {
-    echo newjson(14, '对不起，没有您想要的菜', $array);
+    echo newjson(14, '此菜尚无评论', $array);
 } else {
     $i = 0;
     while ($row = mysqli_fetch_array($result)) {
