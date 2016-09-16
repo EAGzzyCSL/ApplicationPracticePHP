@@ -17,7 +17,7 @@ if (!(mysqli_num_rows($result))) {
     echo newjson(18, 'token操作错误，拒绝服务', $array);
 } else {
     $date = date('Y-m-d H:i:s', time());
-    $sql = "INSERT INTO comment (user_ID, goods_ID, content,rate,time) VALUES ('$user_ID','$goods_ID','$content','$rate','$date')";
+    $sql = "INSERT INTO pinglun (user_ID, goods_ID, content,rate,time) VALUES ('$user_ID','$goods_ID','$content','$rate','$date')";
     $new = mysqli_query($conn, $sql);
     $comment_id = $conn->insert_id;
     $imageArray = explode(',', $images);

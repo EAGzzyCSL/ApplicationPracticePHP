@@ -12,7 +12,7 @@ $result = mysqli_query($conn,"SELECT * FROM token WHERE  token='$token' AND user
 if(!(mysqli_num_rows($result))){
     echo newjson(18,"token操作错误，拒绝服务",$array);
 }else{
-    $result = mysqli_query($conn,"SELECT * FROM goods where ID IN (SELECT goods_ID FROM comment where user_ID='$user_ID')");
+    $result = mysqli_query($conn,"SELECT * FROM goods where ID IN (SELECT goods_ID FROM pinglun where user_ID='$user_ID')");
     if(!(mysqli_num_rows($result))){
         echo newjson(10,"没有有关的数据",$array);
     }else {

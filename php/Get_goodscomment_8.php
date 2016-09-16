@@ -17,8 +17,8 @@ if(isset($_POST['user_ID'])){
 //comment.rate,comment.time,comment.like_num,user_infor.name,user_infor.avatar FROM comment,user_infor
 //WHERE goods_ID='$goods_ID' AND comment.user_ID=user_infor.ID ORDER BY comment.like_num DESC");
 
-$result = mysqli_query($conn, "SELECT comment.*,user_infor.name,user_infor.avatar
-FROM comment,user_infor WHERE comment.goods_ID='$goods_ID' AND comment.user_ID=user_infor.ID ORDER BY comment.like_num DESC");
+$result = mysqli_query($conn, "SELECT pinglun.*,user_infor.name,user_infor.avatar
+FROM pinglun,user_infor WHERE pinglun.goods_ID='$goods_ID' AND pinglun.user_ID=user_infor.ID ORDER BY pinglun.like_num DESC");
 if (!(mysqli_num_rows($result))) {
     echo newjson(14, '此菜尚无评论', $array);
 } else {
