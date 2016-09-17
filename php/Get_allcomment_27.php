@@ -13,7 +13,7 @@ $result = mysqli_query($conn, "SELECT * FROM token WHERE  token='$token' AND use
 if (!(mysqli_num_rows($result))) {
     echo newjson(18, 'token操作错误或用户不存在，拒绝服务', $array);
 } else {
-    $result1 = mysqli_query($conn, "SELECT * FROM comment WHERE user_ID='$user_ID'");
+    $result1 = mysqli_query($conn, "SELECT * FROM pinglun WHERE user_ID='$user_ID'");
     $result2 = mysqli_query($conn, "SELECT name,avatar FROM user_infor WHERE ID='$user_ID'");
     $row2 = mysqli_fetch_array($result2);
     $i = 0;
