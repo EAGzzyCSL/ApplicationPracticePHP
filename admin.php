@@ -11,6 +11,7 @@ if (isset($_SESSION['currentUser']) && $_SESSION['currentUser'] != '') {
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/theme.min.css" rel="stylesheet">
     <script src="js/jquery-3.1.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/md5.min.js"></script>

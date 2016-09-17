@@ -3,6 +3,13 @@ session_start();
 if (isset($_SESSION['currentUser']) == false || $_SESSION['currentUser'] == '') {
     header('location:admin.php');
 }
+function getParentLoc()
+{
+    $_request_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    $index_of_slash = strrpos($_request_url, '/');
+    $url_parent = substr($_request_url, 0, $index_of_slash + 1);
+    return $url_parent;
+}
  ?>
 <!DOCTYPE html>
 <html>
@@ -11,6 +18,7 @@ if (isset($_SESSION['currentUser']) == false || $_SESSION['currentUser'] == '') 
     <meta charset="utf-8" />
     <title>校园美食评后台管理系统</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/theme.min.css" rel="stylesheet">
     <script src="js/jquery-3.1.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/Chart.min.js"></script>
@@ -62,6 +70,8 @@ if (isset($_SESSION['currentUser']) == false || $_SESSION['currentUser'] == '') 
         #img_preview {
             display: block;
             margin: 0 auto;
+            height: 20em;
+            width: 40em;
         }
         /*面板*/
         
@@ -160,7 +170,6 @@ if (isset($_SESSION['currentUser']) == false || $_SESSION['currentUser'] == '') 
                           " />
                             </div>
                             <div class="div_opt">
-                                <button type="button" class="btn btn-primary">编辑</button>
                                 <form class="form_delete" action="php/deleteShop.php" method="post">
                                     <input name="id" type="hidden" value="
                               <?php echo $one['ID'];
@@ -239,7 +248,7 @@ if (isset($_SESSION['currentUser']) == false || $_SESSION['currentUser'] == '') 
                         $secretKey = $config['secretKey'];
                         $auth = new Auth($accessKey, $secretKey);
                         $policy = array(
-                          'returnUrl' => $config['returnUrl'],
+                          'returnUrl' => getParentLoc().'php/303tolocal.php',
                           'returnBody' => '{"key": $(key), "hash":$(etag),"canteen_name":$(x:canteen_name),"canteen_address":$(x:canteen_address),"canteen_school":$(x:canteen_school)}',
                         );
                         $upToken = $auth->uploadToken($bucket, null, 3600, $policy);
@@ -341,6 +350,14 @@ if (isset($_SESSION['currentUser']) == false || $_SESSION['currentUser'] == '') 
                         }
                     };
                 }
+            }
+            var form_delete=document.getElementsByClassName("form_delete");
+            for(var i=0;i<form_delete.length;i++){
+              form_delete[i].onsubmit=function(){
+                if(!window.confirm("确认删除?")){
+                  return false;
+                }
+              }
             }
         })();
 
