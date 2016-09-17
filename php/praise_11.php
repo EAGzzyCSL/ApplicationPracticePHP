@@ -16,8 +16,14 @@ if(!(mysqli_num_rows($result))){
         echo newjson(18,"token操作错误，拒绝服务",$array);
     }else{
         $sql = "INSERT INTO praise (comment_ID, user_ID) VALUES ('$comment_ID','$user_ID')";
+        $sql1 = "SELECT like_num FROM pinglun WHERE  ID='$comment_ID'";
+        $result = mysqli_query($conn,$sql1);
+        $row = mysqli_fetch_array($result);
+        $num = $row['like_num']+1;
+        $sql1 = "UPDATE pinglun SET like_num='$num' WHERE ID='$comment_ID'";
+        $result = mysqli_query($conn,$sql1);
         $new=mysqli_query($conn,$sql);
-        if($new) echo newjson(25,"点赞成功",$array);
+        if($new && $result) echo newjson(25,"点赞成功",$array);
         else echo newjson(26,"点赞失败",$array);
 
     }
